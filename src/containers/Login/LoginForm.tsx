@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Input } from "reactstrap";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import classes from "./LoginForm.module.scss";
 import axiosInstance from "../../api/axios-instance";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState("");
+
+  useEffect(() => {
+    setFormError("");
+  }, [username, password]);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,9 +21,11 @@ const LoginForm = () => {
         username: username,
         password: password,
       });
-      Cookies.set("token", res.data.token);
+      if (res.data) {
+        // Cookies.set("token", res.data.token);
+      }
     } catch (err) {
-      console.log(err);
+      setFormError(err.response.data);
     }
   };
 
@@ -30,6 +37,7 @@ const LoginForm = () => {
             <div className={classes.formWrapper}>
               <div className={classes.formBox}>
                 <h1 className={classes.title}>Login</h1>
+                <p className={classes.formErrorText}>{formError}</p>
                 <Form onSubmit={submit}>
                   <FormGroup>
                     <Input
@@ -38,6 +46,7 @@ const LoginForm = () => {
                       id="username"
                       placeholder="Username"
                       onChange={(e) => setUsername(e.target.value)}
+                      className={formError ? classes.inputError : ""}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -47,6 +56,7 @@ const LoginForm = () => {
                       id="password"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
+                      className={formError ? classes.inputError : ""}
                     />
                   </FormGroup>
                   <Button>Sign In</Button>
