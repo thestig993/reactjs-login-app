@@ -2,29 +2,24 @@ import React, { useState } from "react";
 import { Button, Input } from "reactstrap";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import classes from "./LoginForm.module.scss";
+import axiosInstance from "../../api/axios-instance";
+import Cookies from "js-cookie";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("http://localhost:3333/login", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
+    try {
+      const res = await axiosInstance.post(`/login`, {
         username: username,
         password: password,
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        alert("Success!");
-      } else {
-        alert("Failed!");
-      }
-    });
+      });
+      Cookies.set("token", res.data.token);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
