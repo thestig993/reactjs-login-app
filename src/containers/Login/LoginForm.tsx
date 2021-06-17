@@ -11,10 +11,6 @@ const LoginForm = ({ history }) => {
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    Cookies.remove("token");
-  });
-
-  useEffect(() => {
     setFormError("");
   }, [username, password]);
 

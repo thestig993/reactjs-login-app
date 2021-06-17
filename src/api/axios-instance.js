@@ -3,18 +3,9 @@ import Cookies from "js-cookie";
 
 const axiosInstance = axios.create();
 
-const getTokenFromCookie = () => {
-  const cookieToken = Cookies.get("token");
-  if (cookieToken) {
-    const parsedToken = JSON.parse(cookieToken);
-    return parsedToken.accessToken;
-  }
-  return null;
-};
-
 axiosInstance.interceptors.request.use((config) => {
-  if (!config.headers.Authorization && getTokenFromCookie()) {
-    config.headers["Authorization"] = "Bearer " + getTokenFromCookie();
+  if (!config.headers.authorization) {
+    config.headers["authorization"] = Cookies.get("token");
   }
   return config;
 });
