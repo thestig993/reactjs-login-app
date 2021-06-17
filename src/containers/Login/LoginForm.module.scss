@@ -1,0 +1,44 @@
+.login {
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    transform: rotate(4deg);
+    width: 120%;
+  }
+  &:before {
+    height: 70%;
+    background: #1b4965;
+    top: -100px;
+    left: -20px;
+  }
+  &:after {
+    height: 60%;
+    background: #62b6cb;
+    bottom: -100px;
+    left: -30px;
+  }
+}
+
+.formWrapper {
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  .formBox {
+    box-shadow: 0 0 5px #222;
+    background: #fff;
+    padding: 30px 50px;
+    .title {
+      margin: 0 0 20px 0;
+      font-size: 32px;
+    }
+  }
+}
