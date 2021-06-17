@@ -3,12 +3,16 @@ import { Button, Input } from "reactstrap";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import classes from "./LoginForm.module.scss";
 import axiosInstance from "../../api/axios-instance";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
-const LoginForm = () => {
+const LoginForm = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
+
+  useEffect(() => {
+    Cookies.remove("token");
+  });
 
   useEffect(() => {
     setFormError("");
@@ -22,7 +26,8 @@ const LoginForm = () => {
         password: password,
       });
       if (res.data) {
-        // Cookies.set("token", res.data.token);
+        Cookies.set("token", res.data.token);
+        history.push("/dashboard");
       }
     } catch (err) {
       setFormError(err.response.data);
