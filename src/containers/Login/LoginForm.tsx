@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Button, Input } from "reactstrap";
-import { Container, Row, Col, Form, FormGroup } from "reactstrap";
+import { useState } from "react";
+import { Button } from "reactstrap";
+import { Container, Row, Col, FormGroup } from "reactstrap";
 import classes from "./LoginForm.module.scss";
 import axiosInstance from "../../api/axios-instance";
 import Cookies from "js-cookie";
+import logo from "../../logo.svg";
+import { Formik, Form } from "formik";
+import Input from "../../components/Input";
+import * as Yup from "yup";
 
 const LoginForm = ({ history }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
 
-  useEffect(() => {
-    setFormError("");
-  }, [username, password]);
-
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submit = async ({ username, password }) => {
     try {
       const res = await axiosInstance.post(`/login`, {
-        username: username,
-        password: password,
+        username,
+        password,
       });
       if (res.data) {
         Cookies.set("token", res.data.token);
@@ -30,43 +27,59 @@ const LoginForm = ({ history }) => {
     }
   };
 
+  const validate = Yup.object({
+    username: Yup.string().required("Required username"),
+    password: Yup.string().required("Required password"),
+  });
+
   return (
     <div className={classes.login}>
-      <Container>
-        <Row>
-          <Col md="12">
-            <div className={classes.formWrapper}>
-              <div className={classes.formBox}>
-                <h1 className={classes.title}>Login</h1>
-                <p className={classes.formErrorText}>{formError}</p>
-                <Form onSubmit={submit}>
-                  <FormGroup>
-                    <Input
-                      type="text"
-                      name="username"
-                      id="username"
-                      placeholder="Username"
-                      onChange={(e) => setUsername(e.target.value)}
-                      className={formError ? classes.inputError : ""}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      className={formError ? classes.inputError : ""}
-                    />
-                  </FormGroup>
-                  <Button>Sign In</Button>
-                </Form>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <Formik
+        initialValues={{
+          username: "",
+          password: "",
+        }}
+        validationSchema={validate}
+        onSubmit={(values) => {
+          submit(values);
+        }}
+      >
+        {({ values }) => (
+          <Container>
+            <Row>
+              <Col md="12">
+                <div className={classes.formWrapper}>
+                  <div className={classes.formBox}>
+                    <img className={classes.logo} src={logo} />
+                    <p className={classes.formErrorText}>{formError}</p>
+                    <Form>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          id="username"
+                          name="username"
+                          value={values.username}
+                          placeholder="Username"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Input
+                          type="password"
+                          id="password"
+                          name="password"
+                          value={values.password}
+                          placeholder="Password"
+                        />
+                      </FormGroup>
+                      <Button>Sign In</Button>
+                    </Form>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        )}
+      </Formik>
     </div>
   );
 };

@@ -19,7 +19,7 @@
   }
   &:after {
     height: 60%;
-    background: #62b6cb;
+    background: #61DAFB;
     bottom: -100px;
     left: -30px;
   }
@@ -33,7 +33,7 @@
   justify-content: center;
   overflow: hidden;
   .formBox {
-    box-shadow: 0 0 5px #222;
+    box-shadow: 0 0 10px #4a4a4a;
     background: #fff;
     padding: 30px 50px;
     .title {
@@ -50,4 +50,18 @@
 .formErrorText {
   color: red;
   margin: 0;
+}
+
+.logo {
+  display: inline-block;
+  animation-name: rotate;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
