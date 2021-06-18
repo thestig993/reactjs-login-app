@@ -7,7 +7,7 @@ const Input = ({ ...props }: { [x: string]: any; name: string }) => {
     <div className="mb-2">
       <input
         className={`form-control shadow-none ${
-          meta.touched && meta.error && "is-invalid"
+          (meta.touched && meta.error) || props.hasError ? "is-invalid" : ""
         }`}
         autoComplete="off"
         {...field}

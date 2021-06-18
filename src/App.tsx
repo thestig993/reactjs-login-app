@@ -1,5 +1,4 @@
-import React from "react";
-import LoginForm from "./containers/Login/LoginForm";
+import Login from "./containers/Login/Login";
 import Dashboard from "./containers/Dashboard/Dashboard";
 import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -12,7 +11,7 @@ const App = () => {
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
-          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
