@@ -28,9 +28,9 @@ const TopNavbar = () => {
     <Navbar color="dark" dark expand="md">
       <Container>
         <NavbarToggler onClick={toggle} />
-
         <NavbarBrand href="/">
           <img
+            alt="logo"
             className={classes.logo}
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/320px-React-icon.svg.png"
           />
@@ -40,7 +40,7 @@ const TopNavbar = () => {
             <NavItem>
               <NavLink href="/dashboard">Dashboard</NavLink>
             </NavItem>
-            <NavItem onClick={logout}>
+            <NavItem onClick={logout} role='logout-btn'>
               <NavLink href="/">Logout</NavLink>
             </NavItem>
           </Nav>

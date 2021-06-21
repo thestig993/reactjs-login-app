@@ -30,30 +30,30 @@ const LoginForm = ({ handleSubmit, formError }) => {
               <Col md="12">
                 <div className={classes.formWrapper}>
                   <div className={classes.formBox}>
-                    <img className={classes.logo} src={logo} />
+                    <img className={classes.logo} src={logo} alt='logo' />
                     <p className={classes.formErrorText}>{formError}</p>
-                    <Form className={classes.customForm}>
+                    <Form className={classes.customForm} data-testid='form'>
                       <FormGroup>
                         <Input
+                          data-testid='username'
                           type="text"
                           id="username"
                           name="username"
                           value={values.username}
                           placeholder="Username"
-                          hasError={formError}
                         />
                       </FormGroup>
                       <FormGroup>
                         <Input
+                          data-testid='password'
                           type="password"
                           id="password"
                           name="password"
                           value={values.password}
                           placeholder="Password"
-                          hasError={formError}
                         />
                       </FormGroup>
-                      <Button>Sign In</Button>
+                      <Button role='button'>Sign In</Button>
                     </Form>
                   </div>
                 </div>

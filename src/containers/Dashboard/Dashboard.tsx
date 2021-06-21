@@ -27,7 +27,7 @@ const Dashboard = ({ history }) => {
       if (res.data) {
         setUser(res.data);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
